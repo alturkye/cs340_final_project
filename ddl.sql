@@ -9,7 +9,17 @@ DROP TABLE IF EXISTS Members;
 DROP TABLE IF EXISTS Trainers;
 DROP TABLE IF EXISTS Equipment_Records;
 
-CREATE TABLE Members(
+
+CREATE TABLE Trainers (
+    trainer_id INT AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    specialization VARCHAR(100) NULL,
+    hourly_rate DECIMAL(19,2) NOT NULL,
+    PRIMARY KEY (trainer_id)
+);
+
+CREATE TABLE Members (
     member_id INT AUTO_INCREMENT,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
@@ -18,19 +28,10 @@ CREATE TABLE Members(
     membership_start_date DATE NOT NULL,
     trainer_id INT NULL,
     PRIMARY KEY (member_id),
-    FOREIGN KEY (trainer_id) REFERENCES Trainers(trainer_id) ON DELETE SET NULL
+    FOREIGN KEY (trainer_id) REFERENCES Trainers(trainer_id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TABLE Trainers(
-    trainer_id INT AUTO_INCREMENT,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    specialty VARCHAR(100) NULL,
-    hourly_rate DECIMAL(19,2) NOT NULL,
-    PRIMARY KEY (trainer_id)
-);
-
-CREATE TABLE Classes(
+CREATE TABLE Classes (
     class_id INT AUTO_INCREMENT,
     class_name VARCHAR(100) NOT NULL,
     description TEXT NULL,
@@ -38,10 +39,10 @@ CREATE TABLE Classes(
     trainer_id INT NOT NULL,
     room_location VARCHAR(50) NOT NULL,
     PRIMARY KEY (class_id),
-    FOREIGN KEY (trainer_id) REFERENCES Trainers(trainer_id) ON DELETE CASCADE
+    FOREIGN KEY (trainer_id) REFERENCES Trainers(trainer_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Equipment_Records(
+CREATE TABLE Equipment_Records (
     equipment_id INT AUTO_INCREMENT,
     item_name VARCHAR(100) NOT NULL,
     maintenance_status VARCHAR(50) NOT NULL,
@@ -50,12 +51,32 @@ CREATE TABLE Equipment_Records(
     PRIMARY KEY (equipment_id)
 );
 
+CREATE TABLE Enrollments (
+    enrollment_id INT AUTO_INCREMENT,
+    member_id INT NOT NULL,
+    class_id INT NOT NULL,
+    signup_date DATE NOT NULL,
+    PRIMARY KEY (enrollment_id),
+    FOREIGN KEY (member_id) REFERENCES Members(member_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (class_id) REFERENCES Classes(class_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Classes_Equipment (
+    class_id INT NOT NULL,
+    equipment_id INT NOT NULL,
+    PRIMARY KEY (class_id, equipment_id),
+    FOREIGN KEY (class_id) REFERENCES Classes(class_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (equipment_id) REFERENCES Equipment_Records(equipment_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
 -- Members Table
 INSERT INTO Members (member_id, first_name, last_name, email, phone_number, membership_start_date, trainer_id)
 VALUES 
 (172, 'Amy', 'Clark', 'clarka@gmail.com', '503-142-6326', '2026-01-12', 10),
 (123, 'Sara', 'Mathers', 'saramaths@gmail.com', '503-582-5682', '2026-02-10', 11),
 (421, 'John', 'Smith', 'smithj@outlook.com', '971-458-2752', '2026-03-01', 12);
+
 
 -- Trainers Table
 INSERT INTO Trainers (trainer_id, first_name, last_name, specialization, hourly_rate)
@@ -84,9 +105,9 @@ VALUES
 -- Enrollments Table (Intersection)
 INSERT INTO Enrollments (enrollment_id, member_id, class_id, signup_date)
 VALUES 
-(101, 172, 201, '2026-04-01'), 
-(102, 421, 302, '2026-04-02'), 
-(103, 123, 403, '2026-04-03');
+(101, 172, 201, '2026-01-12'), 
+(102, 421, 302, '2026-02-10'), 
+(103, 123, 403, '2026-03-01');
 
 
 -- Classes_Equipment Table (Intersection)
@@ -95,3 +116,7 @@ VALUES
 (201, 501),
 (302, 502), 
 (403, 503);
+
+
+SET FOREIGN_KEY_CHECKS = 1;
+COMMIT;
