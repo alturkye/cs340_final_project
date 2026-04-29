@@ -84,9 +84,9 @@ VALUES
 -- Enrollments Table (Intersection)
 INSERT INTO Enrollments (enrollment_id, member_id, class_id, signup_date)
 VALUES 
-(101, 172, 201, 2026-4-1), 
-(102, 421, 302, 2026-4-2), 
-(103, 123, 403, 2026-4-3);
+(101, 172, 201, '2026-04-01'), 
+(102, 421, 302, '2026-04-02'), 
+(103, 123, 403, '2026-04-03');
 
 
 -- Classes_Equipment Table (Intersection)
