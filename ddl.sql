@@ -15,9 +15,9 @@ CREATE TABLE Members(
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     phone_number VARCHAR(15),
-    membership_start_date DATE NOT NULL
+    membership_start_date DATE NOT NULL,
     trainer_id INT NULL,
-    PRIMARY KEY (member_id)
+    PRIMARY KEY (member_id),
     FOREIGN KEY (trainer_id) REFERENCES Trainers(trainer_id) ON DELETE SET NULL
 );
 
