@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS Classes;
 DROP TABLE IF EXISTS Members;
 DROP TABLE IF EXISTS Trainers;
 DROP TABLE IF EXISTS Equipment_Records;
+DROP TABLE IF EXISTS Classes_Equipment;
 
 
 CREATE TABLE Trainers (
