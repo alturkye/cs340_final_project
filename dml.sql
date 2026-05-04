@@ -93,3 +93,33 @@ DELETE FROM Equipment_Records WHERE equipment_id = :equipment_id_selected_from_t
 -----
 -- ENROLLMENTS PAGE
 -----
+-- SELECT: view which members are in which classes
+SELECT Enrollments.enrollment_id, Members.first_name, Members.last_name, Classes.class_name, Enrollments.signup_date
+FROM Enrollments
+JOIN Members ON Enrollments.member_id = Members.member_id
+JOIN Classes ON Enrollments.class_id = Classes.class_id;
+
+-- CREATE: enroll a member in a class
+INSERT INTO Enrollments (member_id, class_id, signup_date)
+VALUES (:member_id_from_dropdown, :class_id_from_dropdown, :signup_date_input);
+
+-- DELETE: remove a member's enrollment
+DELETE FROM Enrollments WHERE enrollment_id = :enrollment_id_selected;
+
+-----
+-- CLASSES_EQUIPMENT PAGE
+-----
+
+-- SELECT: list which equipment is assigned to which class
+SELECT Classes.class_name, Equipment_Records.item_name
+FROM Classes_Equipment
+JOIN Classes ON Classes_Equipment.class_id = Classes.class_id
+JOIN Equipment_Records ON Classes_Equipment.equipment_id = Equipment_Records.equipment_id;
+
+-- CREATE: assign equipment to a class
+INSERT INTO Classes_Equipment (class_id, equipment_id)
+VALUES (:class_id_from_dropdown, :equipment_id_from_dropdown);
+
+-- DELETE: remove an equipment assignment from a class
+DELETE FROM Classes_Equipment
+WHERE class_id = :class_id_from_dropdown AND equipment_id = :equipment_id_from_dropdown;
