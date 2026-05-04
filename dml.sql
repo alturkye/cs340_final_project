@@ -44,3 +44,52 @@ WHERE trainer_id = :trainer_id_selected_from_table;
 
 -- DELETE: remove a trainer
 DELETE FROM Trainers WHERE trainer_id = :trainer_id_selected_from_table;
+
+-----
+-- CLASSES PAGE
+-----
+
+-- SELECT: get all classes to browse
+SELECT * FROM Classes;
+
+-- INSERT: add a new fitness class
+INSERT INTO Classes (class_name, description, max_capacity, trainer_id, room_location)
+VALUES (:class_name_input, :description_input, :max_capacity_input, :trainer_id_from_dropdown, :room_location_input);
+
+-- UPDATE: edit class details
+UPDATE Classes
+SET class_name = :class_name_input,
+    description = :description_input,
+    max_capacity = :max_capacity_input,
+    trainer_id = :trainer_id_from_dropdown,
+    room_location = :room_location_input
+WHERE class_id = :class_id_selected;
+
+-- DELETE: cancel a class
+DELETE FROM Classes WHERE class_id = :class_id_selected;
+
+-----
+-- EQUIPMENT PAGE
+-----
+
+-- SELECT: get all equipment records for the browse table
+SELECT * FROM Equipment_Records;
+
+-- CREATE: log a new piece of equipment
+INSERT INTO Equipment_Records (item_name, maintenance_status, purchase_date, location)
+VALUES (:item_name_input, :maintenance_status_input, :purchase_date_input, :location_input);
+
+-- UPDATE: edit equipment details
+UPDATE Equipment_Records
+SET item_name = :item_name_input,
+    maintenance_status = :maintenance_status_input,
+    purchase_date = :purchase_date_input,
+    location = :location_input
+WHERE equipment_id = :equipment_id_selected_from_table;
+
+-- DELETE: remove an equipment record
+DELETE FROM Equipment_Records WHERE equipment_id = :equipment_id_selected_from_table;
+
+-----
+-- ENROLLMENTS PAGE
+-----
