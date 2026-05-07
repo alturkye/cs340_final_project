@@ -1,6 +1,9 @@
 /*
     SETUP
 */
+// Testing! -> Delete when ready!
+// console.log("REGISTERING /trainers ROUTE");
+
 
 // Express
 const express = require('express');  // We are using the express library for the web server
@@ -9,8 +12,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-const PORT = 5005;
+const PORT = process.env.PORT || 5005;
 
+// Testing! -> Delete when ready!
+// app.get('/trainers', (req, res) => {
+//     res.send("TRAINERS ROUTE IS WORKING");
+// });
 
 // Database
 const db = require('./db-connector');
@@ -32,6 +39,31 @@ app.get('/', async function (req, res) {
         // Send a generic error message to the browser
         res.status(500).send('An error occurred while rendering the page.');
     }
+});
+
+// GET Trainers page
+app.get('/trainers', function(req, res) {
+    // Display all Trainers
+    let query1 = 'SELECT * FROM Trainers;';
+
+    db.pool.query(query1, function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.render('trainers', { trainers: rows });
+        }
+    });
+});
+
+// Testing! -> Delete when ready!
+// app.get('/trainers', function(req, res) {
+//     console.log("HIT /trainers ROUTE");
+//     res.send("TRAINERS WORKS");
+// });
+
+app.get('/test', (req, res) => {
+    res.send("TEST OK");
 });
 
 // GET Members page
