@@ -111,8 +111,8 @@ app.post('/add-member', function(req, res) {
     }
 
     // create the INSERT query
-    let query = `INSERT INTO Members (first_name, last_name, email, trainer_id, join_date)
-                 VALUES ('${data['first_name']}', '${data['last_name']}', '${data['email']}', ${trainer}, '${data['join_date']}')`;
+    let query = `INSERT INTO Members (first_name, last_name, email, trainer_id, membership_start_date)
+                 VALUES ('${data['first_name']}', '${data['last_name']}', '${data['email']}', ${trainer}, '${data['membership_start_date']}')`;
 
     // run the query in the database
     db.pool.query(query, function(error, rows, fields) {
