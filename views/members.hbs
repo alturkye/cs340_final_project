@@ -9,7 +9,7 @@
             <th>Last Name</th>
             <th>Email</th>
             <th>Trainer</th>
-            <th>Join Date</th>
+            <th>Membership Start Date</th>
         </tr>
     </thead>
     <tbody>
@@ -20,7 +20,7 @@
             <td>{{this.last_name}}</td>
             <td>{{this.email}}</td>
             <td>{{this.trainer_id}}</td>
-            <td>{{this.join_date}}</td>
+            <td>{{this.membership_start_date}}</td>
         </tr>
         {{/each}}
     </tbody>
@@ -40,8 +40,8 @@
     <label for="email">Email:</label>
     <input type="email" name="email" id="email" required>
 
-    <label for="join_date">Join Date:</label>
-    <input type="date" name="join_date" id="join_date" required>
+    <label for="join_date">Membership Start Date:</label>
+    <input type="date" name="membership_start_date" id="membership_start_date" required>
 
     {{!-- THE DROPDOWN RULE: Using <select> for the Foreign Key --}}
     <label for="trainer_id">Assigned Trainer:</label>
